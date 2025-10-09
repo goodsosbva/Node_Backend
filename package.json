@@ -1,0 +1,23 @@
+{
+  "name": "backend_nodejs",
+  "version": "1.0.0",
+  "description": "Node.js Backend Projects Collection",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install && cd page_nation_bulletin && npm install && cd ../try_mongo && npm install && cd ../okserver/express-server && npm install",
+    "start:bulletin": "cd page_nation_bulletin && npm start",
+    "start:mongo": "cd try_mongo && node test-connection.js",
+    "start:mongoose": "cd try_mongo/test-mongoose && node mongoose-crud.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "mongoose"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+}

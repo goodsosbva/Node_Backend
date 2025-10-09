@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "sample-packages": "file:../sample-packages"
+  }
+}

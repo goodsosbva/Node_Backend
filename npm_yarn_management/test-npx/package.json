@@ -1,0 +1,13 @@
+{
+  "name": "prettier",
+  "version": "2.5.1",
+  "description": "prettier is an opinionated code formatter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "prettier": "^3.6.2"
+  },
+  "bin": "./bin-prettier.js"
+}
