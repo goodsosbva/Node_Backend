@@ -24,6 +24,8 @@ console.log(
         `${process.env.NODE_ENV || 'local'}.env`,
       ),
       load: [config],
+      cache: true,
+      expandVariables: true,
     }),
     WeatherModule,
   ],
