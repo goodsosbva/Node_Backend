@@ -11,7 +11,12 @@ console.log('env: ', process.env.NODE_ENV);
 console.log('current working directory: ' + process.cwd());
 console.log(
   'env file path: ',
-  path.resolve(process.cwd(), 'envs', `${process.env.NODE_ENV || 'local'}.env`),
+  path.resolve(
+    process.cwd(),
+    'src',
+    'envs',
+    `${process.env.NODE_ENV || 'local'}.env`,
+  ),
 );
 
 @Module({
@@ -20,6 +25,7 @@ console.log(
       isGlobal: true,
       envFilePath: path.resolve(
         process.cwd(),
+        'src',
         'envs',
         `${process.env.NODE_ENV || 'local'}.env`,
       ),
