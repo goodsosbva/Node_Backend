@@ -14,7 +14,12 @@ import type {
 import { CreateUserDto } from 'src/user/user.dto';
 import { AuthService } from './auth.service';
 import { User } from 'src/user/user.entity';
-import { AuthenticatedGuard, LocalAuthGuard, LoginGuard } from './auth.guard';
+import {
+  AuthenticatedGuard,
+  GoogleAuthGuard,
+  LocalAuthGuard,
+  LoginGuard,
+} from './auth.guard';
 
 interface RequestWithUser extends ExpressRequest {
   user?: any;
@@ -82,5 +87,16 @@ export class AuthController {
   @Get('test-guard2')
   testGuard2WithSession(@Request() req: RequestWithUser) {
     return req.user as User;
+  }
+
+  @Get('to-google')
+  @UseGuards(GoogleAuthGuard)
+  googleAuth(@Request() req) {}
+
+  @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuthRedirect(@Request() req, @Response() res) {
+    const { user } = req;
+    return res.send(user);
   }
 }
