@@ -91,7 +91,7 @@ export class AuthController {
 
   @Get('to-google')
   @UseGuards(GoogleAuthGuard)
-  googleAuth(@Request() req) {}
+  async googleAuth(@Request() req) {}
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
