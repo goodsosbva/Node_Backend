@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-
+import { multerOption } from './multer.options';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -18,9 +18,10 @@ export class AppController {
   }
 
   @Post('file-upload')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file', multerOption))
   fileUpload(@UploadedFile() file: Express.Multer.File) {
-    console.log(file.buffer.toString('base64'));
-    return 'File Upload';
+    // console.log(file.buffer.toString('utf-8'));
+    console.log(file);
+    return `${file.originalname} uploaded successfully to ${file.path}`;
   }
 }
