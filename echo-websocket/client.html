@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .message {
+      width: 100%;
+      color: #fff;
+      background-color: purple;
+      margin-top: 5px;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <textarea id="message" placeholder="message"></textarea>
+    <br />
+
+    <button onclick="sendMessage()">send</button>
+    <button onclick="closeConnection()">close</button>
+    <div id="messages"></div>
+  </body>
+
+  <script>
+    const ws = new WebSocket("ws://localhost:7777");
+
+    function sendMessage() {
+      ws.send(document.getElementById("message").value);
+    }
+
+    function closeConnection() {
+      console.log("webSocket closed");
+      ws.close();
+    }
+
+    ws.onopen = () => {
+      console.log("connected to client on server");
+    };
+
+    ws.onmessage = function (event) {
+      let message = event.data.replace(/(\r\n|\n|\r)/g, "<br />");
+      let el = document.createElement("div");
+      el.innerHTML = message;
+      el.classList.add("message");
+      document.getElementById("messages").appendChild(el);
+    };
+
+    ws.onclose = function () {
+      console.log("connection closed");
+      let el = document.createElement("div");
+      el.innerHTML = "connection closed";
+      el.classList.add("message");
+      document.getElementById("messages").appendChild(el);
+    };
+  </script>
+  </body>
+</html>
