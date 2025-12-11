@@ -1,5 +1,7 @@
 const socket = io('http://localhost:3000/chat');
 const roomSocket = io('http://localhost:3000/room');
+let currentRoom = '';
+
 const nickname = prompt('Enter your nickname');
 socket.on('connect', () => {
   console.log('connected to server');
@@ -8,6 +10,18 @@ socket.on('connect', () => {
 roomSocket.on('connect', () => {
   console.log('connected to room server');
 });
+
+function senMessage() {
+  if (currentRoom === '') {
+    alert('Please join a room first');
+    return;
+  }
+  const message = $('#message').val();
+  const data = { message, nickname, room: currentRoom };
+  $('#chat').append(`<div>${nickname}: ${message}</div>`);
+  roomSocket.emit('message', data);
+  return false;
+}
 
 function sendMessage() {
   const message = $('#message').val();
@@ -26,6 +40,14 @@ function createRoom() {
   }
 }
 
+socket.on('notice', (data) => {
+  $('#notice').append(`<div>${data.message}</div>`);
+});
+
+roomSocket.on('message', (data) => {
+  $('#chat').append(`${data.message}</div>`);
+});
+
 roomSocket.on('room', (data) => {
   console.log('rooms received:', data);
   $('#rooms').empty();
@@ -35,3 +57,9 @@ roomSocket.on('room', (data) => {
     );
   });
 });
+
+function joinRoom(room) {
+  roomSocket.emit('joinRoom', { room, nickname, toLeave: currentRoom });
+  $('#chat').html('');
+  currentRoom = room;
+}
